@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-helloworld
+spec:
+  selector:
+    app: argocd-helloworld
+  ports:
+  - port: 80
+    targetPort: 80
