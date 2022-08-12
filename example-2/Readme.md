@@ -1,0 +1,1 @@
+* argo cd로 배포할 때 yaml에 정의된 namespace하고 다르게 설정하는 예제
