@@ -5,3 +5,4 @@ Argo CD 예제
 * [example-1: hello world - nginx pod, service](./example-1/)
 * [example-3: nginx deployment](./example-3/)
 * [example-4: prune](./example-4/)
+* [example-4: directory Recurse](./example-5/)
