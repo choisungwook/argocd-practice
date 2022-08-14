@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-3-nginx
+spec:
+  selector:
+    matchLabels:
+      app: example-3-nginx
+  template:
+    metadata:
+      labels:
+        app: example-3-nginx
+    spec:
+      containers:
+      - name: example-3-nginx
+        image: nginx
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "0.1"
+        ports:
+        - containerPort: 80
