@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-4-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example-4-nginx
+  template:
+    metadata:
+      labels:
+        app: example-4-nginx
+    spec:
+      containers:
+      - name: example-4-nginx
+        image: nginx
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "0.1"
+        ports:
+        - containerPort: 80
