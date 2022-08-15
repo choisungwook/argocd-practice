@@ -9,5 +9,5 @@ spec:
       containers:
       - name: busybox
         image: busybox
-        command: ["echo helloworld"]
+        args: ["echo helloworld"]
       restartPolicy: Never
