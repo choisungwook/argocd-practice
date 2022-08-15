@@ -13,5 +13,5 @@ spec:
         command:
         - /bin/sh
         - -c
-        - date; echo Hello from the Kubernetes cluster
+        - date; echo Hello from the Kubernetes cluster1
       restartPolicy: Never
