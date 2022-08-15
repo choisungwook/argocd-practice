@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-      - name: pi
-        image: perl
-        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      - name: busybox
+        image: busybox
+        command: ["echo helloworld"]
       restartPolicy: Never
