@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-3-nginx
+spec:
+  selector:
+    app: example-3-nginx
+  ports:
+  - port: 80
+    targetPort: 80
