@@ -7,4 +7,5 @@ Argo CD 예제
 * [example-4: prune](./example-4/)
 * [example-5: directory Recurse](./example-5/)
 * [example-6: failed job](./example-5/)
+* [example-8: namespace예제](./example-8/)
 * [argocd-user: 사용자 생성예제](./argocd-user/)
