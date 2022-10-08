@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+data:
+  # test-role은 모든 project의 모든 application 제어 권한만 갖는다.
+  # 그리고 test사용자에 test-role을 연결시킨다. 이 설정은 global-role로 적용된다.
+  policy.csv: |
+    p, role:test-role, applications, *, default/*, allow
+    p, role:test-role, projects, get, default, allow
+    p, role:test-role, clusters, get, *, allow
+    g, test, role:test-role
