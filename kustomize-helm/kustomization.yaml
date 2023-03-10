@@ -1,0 +1,7 @@
+helmCharts:
+- name: nginx
+  repo: https://build-deploy-pipeline.github.io/helm-charts
+  version: 0.1.0
+  # releaseName: example
+  namespace: default
+  valuesFile: values.yaml
