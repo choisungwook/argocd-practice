@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: cluster-a # kubernetes cluster name
+        appProject: default # argocd project name
+        k8sURL: https://kubernetes.default.svc # kubernetes cluster url
+        gitRepoURL: https://github.com/choisungwook/argocd-practice.git # git repository url
+        path: chicken_and_egg/cluster-a # git repository path
+        targetRevision: HEAD # git revision
+  template:
+    metadata:
+      name: '{{cluster}}-apps'
+    spec:
+      project: '{{appProject}}'
+      source:
+        repoURL: '{{gitRepoURL}}'
+        targetRevision: '{{targetRevision}}'
+        path: '{{path}}'
+      destination:
+        server: '{{k8sURL}}'
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

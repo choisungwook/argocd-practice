@@ -5,3 +5,5 @@
 
 # 목차
 - [self-managed argocd application](./self-managed-applicaiton.yaml)
+- [bootstrap argocd applicationset](./bootstrap-applicationset.yaml)
+- [chicken and eggs를 위한 argocd applicationset](./apps-applicationset.yaml)
