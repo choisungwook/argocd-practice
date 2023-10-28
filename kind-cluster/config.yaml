@@ -1,0 +1,13 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: argocd-practice
+nodes:
+- role: control-plane
+  image: kindest/node:v1.27.2
+  extraPortMappings:
+  - containerPort: 30950
+    hostPort: 30950
+  - containerPort: 30951
+    hostPort: 30951
+- role: worker
+  image: kindest/node:v1.27.2

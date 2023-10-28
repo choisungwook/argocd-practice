@@ -1,6 +1,21 @@
 # 개요
 Argo CD 예제
 
+<br />
+
+# 실습 환경(옵션)
+* [kind cluster 사용](./kind-cluster/)
+
+```bash
+# 생성
+make up
+
+# 삭제
+make down
+```
+
+<br />
+
 # 목차
 * [argocd 설치](./install_argocd_with_kustomize)
 * [example-1: hello world - nginx pod, service](./example-1/)
