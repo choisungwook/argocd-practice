@@ -2,6 +2,7 @@
 Argo CD 예제
 
 # 목차
+* [argocd 설치](./install_argocd_with_kustomize)
 * [example-1: hello world - nginx pod, service](./example-1/)
 * [example-3: nginx deployment](./example-3/)
 * [example-4: prune](./example-4/)

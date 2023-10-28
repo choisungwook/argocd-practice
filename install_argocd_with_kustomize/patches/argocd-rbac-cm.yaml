@@ -1,0 +1,16 @@
+- op: add
+  path: /data
+  value:
+    # default policy를 주석하여 테스트해보세요.
+    policy.default: role:readonly
+    policy.csv: |
+      # 정책 의도: group-a그룹은 b-helm-guestbook application 권한만 제거, 나머지 application은 허용
+      p, role:group-a, applications, *, default/*, allow
+      p, role:group-a, applications, *, default/b-helm-guestbook, deny
+
+      # 아래 policy는 올바르게 동작하지 않습니다. deny정책을 사용하기 위해 allow정책이 앞에 있어야 합니다.
+      # 정책 의도: group-b그룹은 a-helm-guest application을 제외, 나머지 application은 허용
+      p, role:group-b, applications, *, default/a-helm-guestbook, deny
+
+      g, alice, role:group-a
+      g, bob, role:group-b
