@@ -8,13 +8,14 @@ resources:
 - github.com/argoproj/argo-cd/manifests/cluster-rbac?ref=v2.6.2
 
 patches:
-- path: patches/argocd-rbac-cm.yaml
-  target:
-    name: argocd-rbac-cm
-- path: patches/argocd-cm.yaml
-  target:
-    kind: ConfigMap
-    name: argocd-cm
+# - path: patches/argocd-rbac-cm.yaml
+#   target:
+#     name: argocd-rbac-cm
+# - path: patches/argocd-cm.yaml
+#   target:
+#     kind: ConfigMap
+#     name: argocd-cm
+# argocd-server nodeport 설정
 - path: patches/argocd-server-svc.yaml
   target:
     kind: Service
