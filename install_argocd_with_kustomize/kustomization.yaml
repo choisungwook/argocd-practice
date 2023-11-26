@@ -4,9 +4,9 @@ namespace: argocd
 
 resources:
 - ./namespace.yaml
-- github.com/argoproj/argo-cd/manifests/base?ref=v2.6.2
-- github.com/argoproj/argo-cd/manifests/crds?ref=v2.6.2
-- github.com/argoproj/argo-cd/manifests/cluster-rbac?ref=v2.6.2
+- github.com/argoproj/argo-cd/manifests/base?ref=stable
+- github.com/argoproj/argo-cd/manifests/crds?ref=stable
+- github.com/argoproj/argo-cd/manifests/cluster-rbac?ref=stable
 
 patches:
 # - path: patches/argocd-rbac-cm.yaml
