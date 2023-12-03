@@ -18,10 +18,6 @@ helm upgrade --install argocd argo/argo-cd \
   -f my-values.yaml
 ```
 
-helm template argocd argo/argo-cd \
-  -n argocd --create-namespace \
-  -f my-values.yaml
-
 # 삭제방법
 
 ```bash
