@@ -17,7 +17,8 @@ make down
 <br />
 
 # 목차
-* [argocd 설치](./install_argocd_with_kustomize)
+* [kustomize로 argocd 설치](./install_argocd_with_kustomize)
+* [helm chart로 argocd 설치](./install_argocd_with_helm/)
 * [example-1: hello world - nginx pod, service](./example-1/)
 * [example-3: nginx deployment](./example-3/)
 * [example-4: prune](./example-4/)
