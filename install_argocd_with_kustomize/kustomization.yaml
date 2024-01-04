@@ -25,3 +25,9 @@ patches:
 #   target:
 #     kind: Deployment
 #     name: argocd-applicationset-controller
+# Argo Rollouts Extension 설치
+# https://github.com/argoproj-labs/argocd-extension-metrics#install-ui-extension
+- path: patches/argocd-server-deployment.yaml
+  target:
+    kind: Deployment
+    name: argocd-server
