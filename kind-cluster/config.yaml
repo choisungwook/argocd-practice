@@ -9,5 +9,11 @@ nodes:
     hostPort: 30950
   - containerPort: 30951
     hostPort: 30951
+  - containerPort: 30960
+    hostPort: 30960
+  - containerPort: 30961
+    hostPort: 30961
+  - containerPort: 30962
+    hostPort: 30962
 - role: worker
   image: kindest/node:v1.28.0
