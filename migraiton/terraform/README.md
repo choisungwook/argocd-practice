@@ -1,5 +1,14 @@
+- [개요](#%EA%B0%9C%EC%9A%94)
+- [아키텍처](#%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
+- [실행방법](#%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95)
+- [ArgoCD 설치 확인](#argocd-%EC%84%A4%EC%B9%98-%ED%99%95%EC%9D%B8)
+- [ArgoCD 접속 방법](#argocd-%EC%A0%91%EC%86%8D-%EB%B0%A9%EB%B2%95)
+- [ArgoCD 초기 비밀번호](#argocd-%EC%B4%88%EA%B8%B0-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8)
+- [삭제 방법](#%EC%82%AD%EC%A0%9C-%EB%B0%A9%EB%B2%95)
+
 # 개요
 * terraform으로 ArgoCD migration 테스트 환경 구성
+* kubernetes는 kind cluster를 사용
 
 # 아키텍처
 
@@ -20,6 +29,7 @@ terraform apply
 $ ls -l *-config
 -rw-------  1 test  test  5600 May 12 00:21 as-is-config
 -rw-------  1 test  test  5604 May 11 23:42 to-be-config
+```
 
 * kubectl 사용 방법
 
