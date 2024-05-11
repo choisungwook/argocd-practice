@@ -22,3 +22,29 @@ resource "kind_cluster" "as-is" {
     }
   }
 }
+
+resource "helm_release" "as_is_argocd" {
+  provider = helm.as-is
+
+  name             = "as-is-argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  create_namespace = true
+  version          = var.argocd_helm_chart_version
+  # wait             = false
+
+  values = [
+    "${file("values.yaml")}"
+  ]
+
+  set {
+    name  = "server.service.type"
+    value = "NodePort"
+  }
+
+  set {
+    name  = "server.service.nodePortHttps"
+    value = "30950"
+  }
+}

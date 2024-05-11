@@ -19,6 +19,7 @@ make down
 # 목차
 * [kustomize로 argocd 설치](./install_argocd_with_kustomize)
 * [helm chart로 argocd 설치](./install_argocd_with_helm/)
+* [terraform으로 argocd 설치](./migraiton/terraform/as-is.tf)
 * [example-1: hello world - nginx pod, service](./example-1/)
 * [example-3: nginx deployment](./example-3/)
 * [example-4: prune](./example-4/)
@@ -30,4 +31,3 @@ make down
 * [self-managed argocd application](./bootstrap/self-managed-applicaiton.yaml)
 * [bootstrap applicationset 예제](./bootstrap/bootstrap-applicationset.yaml)
 * [argocd application관리(chicken and egg) 문제 해결](./chicken_and_egg/)
-
