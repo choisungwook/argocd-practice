@@ -10,6 +10,9 @@
 * terraform으로 ArgoCD migration 테스트 환경 구성
 * kubernetes는 kind cluster를 사용
 
+# 전제조건
+* kind 바이너리가 설치되어 있어야 함
+
 # 아키텍처
 
 ![](./imgs/arch.png)
@@ -27,8 +30,11 @@ terraform apply
 
 ```sh
 $ ls -l *-config
--rw-------  1 test  test  5600 May 12 00:21 as-is-config
--rw-------  1 test  test  5604 May 11 23:42 to-be-config
+-rw-------  1 testuser  testgroup  5600 May 12 00:21 as-is-config
+-rw-------  1 testuser  testgroup  5632 May 12 00:51 cluster-a-config
+-rw-------  1 testuser  testgroup  5632 May 12 00:51 cluster-b-config
+-rw-------  1 testuser  testgroup  5632 May 12 00:51 cluster-c-config
+-rw-------  1 testuser  testgroup  5604 May 11 23:42 to-be-config
 ```
 
 * kubectl 사용 방법
@@ -36,10 +42,14 @@ $ ls -l *-config
 ```sh
 # AS-IS kind cluster
 KUBECONFIG=as-is-config kubectl get nodes
-KUBECONFIG=as-is-config kubectl get pod -n argocd
 
 # TO-BE kind cluster
 KUBECONFIG=to-be-config kubectl get nodes
+
+# ArgoCD에 연결할 cluster목록
+KUBECONFIG=cluster-a-config kubectl get nodes
+KUBECONFIG=cluster-b-config kubectl get nodes
+KUBECONFIG=cluster-c-config kubectl get nodes
 ```
 
 # ArgoCD 설치 확인
