@@ -75,7 +75,7 @@ PASSWORD=$(KUBECONFIG=as-is-config kubectl -n argocd get secret argocd-initial-a
 echo $PASSWORD | base64 -d; echo
 
 # TO-BE kind cluster
-KUBECONFIG=to-be-config kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+PASSWORD=$(KUBECONFIG=to-be-config kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}")
 echo $PASSWORD | base64 -d; echo
 ```
 
