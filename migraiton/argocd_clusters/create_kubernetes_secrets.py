@@ -18,7 +18,7 @@ def create_secret_yaml(kubeconfig_paths):
 
         with open("template.yaml", "r") as f:
             args = {
-                "CLUSTER_NAME": cluster_name,
+                "CLUSTER_NAME": f'{cluster_name.replace("kind-", "")}-control-plane',
                 "caData": ca_data,
                 "certData": cert_data,
                 "keyData": key_data,
