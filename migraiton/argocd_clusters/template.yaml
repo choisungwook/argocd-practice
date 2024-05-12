@@ -8,7 +8,7 @@ metadata:
 type: Opaque
 stringData:
   name: "{{CLUSTER_NAME}}"
-  server: "https://{{CLUSTER_NAME}}"
+  server: "https://{{CLUSTER_NAME}}:6443"
   config: |
     {
       "tlsClientConfig": {
