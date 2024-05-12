@@ -73,7 +73,7 @@ KUBECONFIG=../terraform/as-is-config kubectl apply -f ./cluster_C/
 
 # 6. 마이그레이션
 
-## (옵션1) 6.1 수작으로 진행
+## (옵션1) 6.1 수동
 1. AS-IS와 같은 설정으로 TO-BE ArgoCD 생성
 2. AS-IS ArgoCD Cluster를 그대로 TO-BE ArgoCD에 생성
 3. AS-IS ArgoCD Project를 그대로 TO-BE ArgoCD에 생성
