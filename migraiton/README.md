@@ -33,3 +33,21 @@ KUBECONFIG=../terraform/as-is-config kubectl apply -f kind-cluster-c-secrets.yam
 ![](./imgs/argocd_cluster_1.png)
 
 ![](./imgs/argocd_cluster_2.png)
+
+# 4. ArgoCD Project 생성
+
+* 2번과정에서 terraform으로 kind cluster가 생성되어야 있어야 합니다.
+
+```sh
+1. cd argocd_projects
+
+2. kubernetes secrest를 apply
+KUBECONFIG=../terraform/as-is-config kubectl apply -f ./cluster_A/
+KUBECONFIG=../terraform/as-is-config kubectl apply -f ./cluster_B/
+KUBECONFIG=../terraform/as-is-config kubectl apply -f ./cluster_C/
+```
+
+
+![](./imgs/argocd_project_1.png)
+
+![](./imgs/argocd_project_2.png)
