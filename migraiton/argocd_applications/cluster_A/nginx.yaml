@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-a-nginx
+  namespace: argocd
+spec:
+  project: cluster-a
+  source:
+    path: example-1
+    repoURL: 'https://github.com/choisungwook/argocd-practice.git'
+    targetRevision: HEAD
+  destination:
+    namespace: default
+    server: 'https://cluster-a-control-plane:6443'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
