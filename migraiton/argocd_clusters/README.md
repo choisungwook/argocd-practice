@@ -31,3 +31,6 @@ KUBECONFIG=../terraform/as-is-config kubectl apply -f kind-cluster-c-secrets.yam
 ![](../imgs/argocd_cluster_1.png)
 
 ![](../imgs/argocd_cluster_2.png)
+
+# 다음 단계
+* [Argocd Project 생성](../argocd_projects/)
