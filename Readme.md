@@ -31,3 +31,4 @@ make down
 * [self-managed argocd application](./bootstrap/self-managed-applicaiton.yaml)
 * [bootstrap applicationset 예제](./bootstrap/bootstrap-applicationset.yaml)
 * [argocd application관리(chicken and egg) 문제 해결](./chicken_and_egg/)
+* [쿠버네티스 업그레이드 시 (중앙) ArgoCD Migration](./migraiton/)
