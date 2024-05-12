@@ -8,7 +8,7 @@
   - [옵션2 ArgoCD export, import기능 사용](#%EC%98%B5%EC%85%982-argocd-export-import%EA%B8%B0%EB%8A%A5-%EC%82%AC%EC%9A%A9)
 
 # 1. 개요
-* ArgoCD migration 진행
+* 멀티 클러스터를 관리하는 ArgoCD를 마이그레이션하는 방법을 정리
 
 
 # 2. AS-IS kind클러스터와 ArgoCD 생성
