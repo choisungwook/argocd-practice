@@ -103,7 +103,41 @@ jobs:
 - Prometheus ServiceMonitor, PrometheusRule
 - cert-manager Certificate, ClusterIssuer
 
-해결: ArgoCD helm values에 CRD를 설치하는 설정을 추가합니다.
+해결 방법은 두 가지입니다.
+
+**방법 1: CRD 의존 Application을 렌더링 대상에서 제외**
+
+Application에 label을 추가하고 `SELECTOR`로 필터링합니다. CRD 설정이 필요 없어 가장 간단합니다.
+
+Application에 label을 추가합니다.
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-virtualservice
+  labels:
+    skip-diff: "true"    # diff 제외 대상 표시
+```
+
+docker run에 SELECTOR 환경 변수를 추가합니다. `!=` 연산자로 해당 label이 없는 Application만 렌더링합니다.
+
+```bash
+-e SELECTOR="skip-diff!=true"
+```
+
+**방법 2: ArgoCD Helm values로 CRD 설치**
+
+ArgoCD Helm values 파일을 volume mount하고 `ARGOCD_CHART_VALUES` 환경 변수로 전달하면, argocd-diff-preview가 ArgoCD를 설치할 때 해당 설정을 적용합니다.
+
+```bash
+docker run \
+  -v $(pwd)/argocd-values.yaml:/argocd-values.yaml \
+  -e ARGOCD_CHART_VALUES=/argocd-values.yaml \
+  dagandersen/argocd-diff-preview:latest
+```
+
+하지만 CRD를 임시 클러스터에 설치하는 구체적인 방법은 공식 문서에서 상세히 다루지 않아서, 방법 1이 더 현실적입니다.
 
 ### Config Management Plugin (CMP)
 
