@@ -3,9 +3,10 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: argocd-practice
 nodes:
 - role: control-plane
-  image: kindest/node:v1.28.0
+  image: kindest/node:v1.35.0
+  # NodePort 서비스를 localhost에서 접근하기 위한 포트 매핑
   extraPortMappings:
-  - containerPort: 30950
+  - containerPort: 30950 # argocd-server (https)
     hostPort: 30950
   - containerPort: 30951
     hostPort: 30951
@@ -16,4 +17,4 @@ nodes:
   - containerPort: 30962
     hostPort: 30962
 - role: worker
-  image: kindest/node:v1.28.0
+  image: kindest/node:v1.35.0
