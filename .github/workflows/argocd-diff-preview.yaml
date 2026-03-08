@@ -1,0 +1,96 @@
+name: ArgoCD Diff Preview
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.yaml'
+      - '**/*.yml'
+
+  issue_comment:
+    types: [created]
+
+concurrency:
+  # concurrency.group: 같은 group 값을 가진 workflow는 동시에 1개만 실행됩니다.
+  # cancel-in-progress: true이면 새 실행이 시작될 때 같은 group의 이전 실행을 취소합니다.
+  #
+  # PR 번호 출처:
+  #   - pull_request 이벤트: github.event.number (예: 25)
+  #   - issue_comment(/preview) 이벤트: github.event.issue.number (예: 25)
+  #   - || 연산자로 둘 중 존재하는 값을 사용합니다.
+  #
+  # group 구성 예시 (PR #25 기준):
+  #   - PR push       → argocd-diff-25-pr   (항상 같은 group → 이전 실행 취소)
+  #   - /preview 1회  → argocd-diff-25-111  (run_id가 매번 고유 → 중복 실행 허용)
+  #   - /preview 2회  → argocd-diff-25-222  (run_id가 매번 고유 → 중복 실행 허용)
+  group: argocd-diff-${{ github.event.number || github.event.issue.number }}-${{ github.event_name == 'issue_comment' && github.run_id || 'pr' }}
+  cancel-in-progress: true
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/preview'))
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      # pull_request 이벤트와 issue_comment(/preview) 이벤트에서
+      # PR 번호와 소스 브랜치를 동일한 output으로 통일합니다.
+      # issue_comment 이벤트에서는 github.head_ref가 없으므로 gh CLI로 조회합니다.
+      - name: Get PR info
+        id: pr
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "number=${{ github.event.number }}" >> "$GITHUB_OUTPUT"
+            echo "head_ref=${{ github.head_ref }}" >> "$GITHUB_OUTPUT"
+          else
+            PR_NUMBER="${{ github.event.issue.number }}"
+            HEAD_REF=$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json headRefName -q .headRefName)
+            echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+            echo "head_ref=$HEAD_REF" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.head_ref }}
+          path: pull-request
+
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Generate Diff
+        run: |
+          docker run \
+            --network=host \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v $(pwd)/main:/base-branch \
+            -v $(pwd)/pull-request:/target-branch \
+            -v $(pwd)/output:/output \
+            -e TARGET_BRANCH=${{ steps.pr.outputs.head_ref }} \
+            -e REPO=${{ github.repository }} \
+            -e AUTO_DETECT_FILES_CHANGED=true \
+            -e TIMEOUT=300 \
+            dagandersen/argocd-diff-preview:latest
+
+      # --edit-last: 기존 diff comment가 있으면 업데이트합니다.
+      # 기존 comment가 없으면 --edit-last가 실패하므로 || 뒤에서 새로 생성합니다.
+      - name: Post diff comment
+        if: always() && hashFiles('output/diff.md') != ''
+        run: |
+          gh pr comment ${{ steps.pr.outputs.number }} \
+            --repo ${{ github.repository }} \
+            --body-file output/diff.md --edit-last || \
+          gh pr comment ${{ steps.pr.outputs.number }} \
+            --repo ${{ github.repository }} \
+            --body-file output/diff.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
