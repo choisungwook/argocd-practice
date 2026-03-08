@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: safe-with-preserve
+  labels:
+    app.kubernetes.io/name: safe-with-preserve
+    app.kubernetes.io/part-of: argocd-applicationset-example
+  namespace: argocd
+spec:
+  # ApplicationSet 삭제 시 K8s 리소스를 보존
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  strategy:
+    type: create-update
+  generators:
+    - git:
+        repoURL: https://github.com/choisungwook/argocd-applicationset.git
+        revision: main
+        files:
+          - path: "clusters/*/config.json"
+  template:
+    metadata:
+      name: '{{cluster.name}}'
+      labels:
+        app.kubernetes.io/managed-by: applicationset
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/choisungwook/argocd-applicationset.git
+        targetRevision: main
+        path: '{{cluster.manifestPath}}'
+      destination:
+        server: '{{cluster.server}}'
+        namespace: '{{cluster.namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

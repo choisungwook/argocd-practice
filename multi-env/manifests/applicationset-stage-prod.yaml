@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: multi-env-stage-prod
+  labels:
+    app.kubernetes.io/name: multi-env-stage-prod
+    app.kubernetes.io/part-of: argocd-applicationset-example
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: stage
+            url: https://kubernetes.default.svc
+            namespace: stage
+          - env: prod
+            url: https://kubernetes.default.svc
+            namespace: prod
+  template:
+    metadata:
+      name: "{{env}}-multi-env"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/choisungwook/argocd-applicationset.git
+        targetRevision: main
+        path: "multi-env/manifests/apps/{{env}}"
+      destination:
+        server: "{{url}}"
+        namespace: "{{namespace}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

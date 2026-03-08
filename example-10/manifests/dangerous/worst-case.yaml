@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dangerous-worst-case
+  labels:
+    app.kubernetes.io/name: dangerous-worst-case
+    app.kubernetes.io/part-of: argocd-applicationset-example
+  namespace: argocd
+spec:
+  generators:
+    - pullRequest:
+        github:
+          owner: choisungwook
+          repo: argocd-applicationset
+          tokenRef:
+            secretName: github-token
+            key: token
+        requeueAfterSeconds: 10
+  template:
+    metadata:
+      name: 'pr-{{number}}-{{branch_slug}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/choisungwook/argocd-applicationset.git
+        targetRevision: '{{head_sha}}'
+        path: example-3
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'pr-{{number}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: multi-cluster-directory-generator
+  labels:
+    app.kubernetes.io/name: multi-cluster-directory-generator
+    app.kubernetes.io/part-of: argocd-applicationset-example
+  namespace: argocd
+spec:
+  strategy:
+    type: create-update
+  generators:
+    - git:
+        repoURL: https://github.com/choisungwook/argocd-applicationset.git
+        revision: main
+        directories:
+          - path: "clusters/*"
+  template:
+    metadata:
+      name: '{{path.basename}}'
+      labels:
+        app.kubernetes.io/managed-by: applicationset
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/choisungwook/argocd-applicationset.git
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

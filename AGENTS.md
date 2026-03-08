@@ -7,4 +7,4 @@
 
 ## agent skills
 
-- 문서작성은 akbun style skills를 사용한다.
+- 문서작성은 akbun style skills를 사용한다. 그리고 존댓말을 사용한다.
