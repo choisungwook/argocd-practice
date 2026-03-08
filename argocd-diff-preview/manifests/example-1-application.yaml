@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-1
+  namespace: argocd
+  labels:
+    app: example-1
+spec:
+  project: default
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/choisungwook/argocd-practice
+    path: example-1
+    targetRevision: main
+  syncPolicy:
+    automated: {}
