@@ -1,0 +1,23 @@
+## Argo CD v3.3.2 (Helm Chart 9.4.7)
+## ApplicationSet UI 지원을 위한 values 설정
+
+global:
+  domain: ""
+
+## argocd-server를 NodePort로 노출 (kind cluster 사용)
+server:
+  service:
+    type: NodePort
+    nodePortHttps: 30950
+
+  ## insecure 모드 활성화 (TLS 없이 접속)
+  extraArgs:
+    - --insecure
+
+## ApplicationSet Controller 설정
+applicationSet:
+  enabled: true
+
+## Redis HA 비활성화 (로컬 환경)
+redis-ha:
+  enabled: false
